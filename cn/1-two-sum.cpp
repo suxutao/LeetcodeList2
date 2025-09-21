@@ -5,11 +5,14 @@ using namespace std;
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        vector<int>v;
-        for (int i = 0; i < 1; ++i) {
-
+        int n=nums.size();
+        unordered_map<int,int>m;
+        for (int i = 0; i < n; ++i) {
+            if (m.contains(target-nums[i]))
+                return {m[target-nums[i]],i};
+            m[nums[i]]=i;
         }
-        return {0};
+        return {};
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
