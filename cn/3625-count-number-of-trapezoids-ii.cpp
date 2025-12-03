@@ -6,7 +6,6 @@ using namespace std;
 class Solution {
 public:
     int countTrapezoids(vector<vector<int>>& points) {
-        // 经测试，哈希表套 map 比哈希表套哈希表更快（分组后，每一组的数据量比较小，在小数据下 map 比哈希表快）
         unordered_map<double, map<double, int>> cnt; // 斜率 -> 截距 -> 个数
         unordered_map<int, map<double, int>> cnt2; // 中点 -> 斜率 -> 个数
 
