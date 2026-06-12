@@ -4,28 +4,28 @@ using namespace std;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 struct ST {
-    vector<vector<int>> mn, mx;
+    vector<vector<int>> Min, Max;
 
-    ST(vector<int> &a) {
+    ST(const vector<int> &a) {
         int n = a.size(), w = bit_width((unsigned) n);
-        mn.resize(w, vector<int>(n));
-        mx.resize(w, vector<int>(n));
+        Max.assign(w, vector<int>(n));
+        Min.assign(w, vector<int>(n));
         for (int i = 0; i < n; ++i) {
-            mn[0][i] = a[i];
-            mx[0][i] = a[i];
+            Max[0][i] = a[i];
+            Min[0][i] = a[i];
         }
         for (int i = 1; i < w; ++i) {
             for (int j = 0; j + (1 << i) <= n; ++j) {
-                mn[i][j] = min(mn[i - 1][j], mn[i - 1][j + (1 << (i - 1))]);
-                mx[i][j] = max(mx[i - 1][j], mx[i - 1][j + (1 << (i - 1))]);
+                Max[i][j] = max(Max[i - 1][j], Max[i - 1][j + (1 << (i - 1))]);
+                Min[i][j] = min(Min[i - 1][j], Min[i - 1][j + (1 << (i - 1))]);
             }
         }
     }
 
     int query(int l, int r) {
-        int k = bit_width((unsigned) r - l) - 1;
-        int MIN = min(mn[k][l], mn[k][r - (1 << k)]);
-        int MAX = max(mx[k][l], mx[k][r - (1 << k)]);
+        int w = bit_width((unsigned) r - l) - 1;
+        int MAX = max(Max[w][l], Max[w][r - (1 << w)]);
+        int MIN = min(Min[w][l], Min[w][r - (1 << w)]);
         return MAX - MIN;
     }
 };
